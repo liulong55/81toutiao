@@ -72,6 +72,7 @@ export default {
           console.log('前端效验成功')
           this.$axios.post('/authorizations', this.formData).then(result => {
             console.log(result)
+            console.log(result.data.data)
           })
         }
       })

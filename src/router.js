@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/home'
 import login from './views/login'
+import { readdir } from 'fs'
 Vue.use(Router)
 
 export default new Router({
@@ -9,11 +10,15 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/',
+      redirect: '/login'
+    },
+    {
       path: '/login',
       component: login
     },
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: Home
     }

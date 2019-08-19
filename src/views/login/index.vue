@@ -4,23 +4,23 @@
         <div class="tupian">
             <img src="../../assets/img/logo_index.png" alt="">
         </div>
-        <el-form>
+        <el-form :model="formData" :rules="rules" ref="form">
             <!-- 第一个手机输入框 -->
-            <el-form-item>
-                <el-input placeholder="请输入手机号"></el-input>
+            <el-form-item prop="mobile">
+                <el-input placeholder="请输入手机号" v-model="formData.mobile"></el-input>
             </el-form-item>
             <!-- 第二个输入框 -->
-            <el-form-item>
-                <el-input style="width:230px" placeholder="请输入验证码"></el-input>
+            <el-form-item prop="code">
+                <el-input style="width:230px" placeholder="请输入验证码" v-model="formData.code"></el-input>
                 <el-button style="float:right">发送验证码</el-button>
             </el-form-item>
             <!-- 第三个 -->
-            <el-form-item>
-                <el-checkbox>我已阅读并同意用户协议和隐私条款</el-checkbox>
+            <el-form-item prop="check">
+                <el-checkbox v-model="formData.check">我已阅读并同意用户协议和隐私条款</el-checkbox>
             </el-form-item>
             <!-- 提交按钮 -->
             <el-form-item>
-                <el-button type="primary" style="width:100%">登录</el-button>
+                <el-button type="primary" @click='login' style="width:100%">登录</el-button>
             </el-form-item>
         </el-form>
     </el-card>
@@ -29,7 +29,51 @@
 
 <script>
 export default {
+  data () {
+    // 自定义效验函数
+    var func = function (rules, value, callback) {
+      if (value) {
+        callback()
+      } else {
+        callback(new Error('您必须无条件同意'))
+      }
+    }
+    return {
+      formData: {
+        // 手机号
+        mobile: '',
+        // 验证码
+        code: '',
+        check: false
 
+      },
+      rules: {
+        mobile: [
+          { required: true, message: '登录号码不能为空', trigger: 'blur' },
+          { pattern: /^1[3456789]\d{9}$/, message: '手机号码格式错误' }
+        ],
+        code: [
+          { required: true, message: '验证码不能为空', trigger: 'blur' },
+          { pattern: /^\d{6}$/, message: '验证码格式错误' }
+        ],
+        check: [
+          { // 自定义效验函数
+            validator: func
+          }
+        ]
+      }
+    }
+  },
+  methods: {
+    login () {
+      // 手动效验表单数据
+      this.$refs.form.validate(isok => {
+        if (isok) {
+          console.log('前端效验成功')
+        }
+      })
+    }
+  }
 }
 </script>
 

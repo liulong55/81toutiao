@@ -70,6 +70,9 @@ export default {
       this.$refs.form.validate(isok => {
         if (isok) {
           console.log('前端效验成功')
+          this.$axios.post('/authorizations', this.formData).then(result => {
+            console.log(result)
+          })
         }
       })
     }

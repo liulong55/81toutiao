@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/home'
 import login from './views/login'
-import { readdir } from 'fs'
+
 Vue.use(Router)
 
 export default new Router({

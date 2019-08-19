@@ -35,7 +35,7 @@ export default {
       if (value) {
         callback()
       } else {
-        callback(new Error('您必须无条件同意'))
+        callback(new Error('请您仔细阅读用户协议和隐私条款,登录需勾选'))
       }
     }
     return {
@@ -71,10 +71,29 @@ export default {
         if (isok) {
           console.log('前端效验成功')
           this.$axios.post('/authorizations', this.formData).then(result => {
-            console.log(result)
-            console.log(result.data.data)
+            // console.log(result)
+            // console.log(result.data.data)
+            // 储存在本地里
+            window.localStorage.setItem('user-onfo', JSON.stringify(result.data.data))
+            // 登录成功,跳转到home页
+            this.$router.push('/home')
+            // 登录失败提醒
+          }).catch(res => {
+            this.openVn()
+            this.formData.mobile = ''
+            this.formData.code = ''
+            this.formData.check = false
           })
         }
+      })
+    },
+    openVn () {
+      const h = this.$createElement
+      this.$message({
+        message: h('p', null, [
+          h('span', null, '登录信息有误'),
+          h('i', { style: 'color: teal' })
+        ])
       })
     }
   }

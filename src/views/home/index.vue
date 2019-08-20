@@ -10,7 +10,7 @@
       <layout-header></layout-header>
     </el-header>
     <el-main>
-        <!-- 右边容器 -->
+        <!-- 二级路由的容器 -->
         <router-view/>
     </el-main>
   </el-container>

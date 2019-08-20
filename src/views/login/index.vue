@@ -70,9 +70,10 @@ export default {
       this.$refs.form.validate(isok => {
         if (isok) {
           console.log('前端效验成功')
+          console.log(this.formData)
           this.$axios.post('/authorizations', this.formData).then(result => {
             // console.log(result)
-            // console.log(result.data.data)
+            console.log(result.data.data)
             // 储存在本地里
             window.localStorage.setItem('user-onfo', JSON.stringify(result.data.data))
             // 登录成功,跳转到home页

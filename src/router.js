@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/home'
 import login from './views/login'
-
+import moren from './components/home/layout-zuye.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -20,7 +20,13 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: '',
+          component: moren
+        }
+      ]
     }
     // {
     //   path: '/about',

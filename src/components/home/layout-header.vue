@@ -5,15 +5,16 @@
       <span>江苏传智播客教育科技股份有限公司</span>
   </el-col>
   <el-col :span="3" class="you">
+        <!-- 如果有就拿网络的,如果没有就拿本地的,已被转成base64位的 -->
       <img :src="user.photo? user.photo:defaultImg" alt="">
-    <el-dropdown trigger="click">
+    <el-dropdown trigger="click" @command='xiala'>
       <span class="el-dropdown-link">
        {{user.name}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item >个人信息</el-dropdown-item>
-        <el-dropdown-item >git地址</el-dropdown-item>
-        <el-dropdown-item >退出</el-dropdown-item>
+        <el-dropdown-item command='account'>个人信息</el-dropdown-item>
+        <el-dropdown-item command='git'>git地址</el-dropdown-item>
+        <el-dropdown-item command='tui'>退出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </el-col>
@@ -27,7 +28,7 @@ export default {
       user: {
 
       },
-      defaultImg: require('../../assets/img/avatar.jpg')
+      defaultImg: require('../../assets/img/avatar.jpg') // require的图片就变成了base64
     }
   },
   methods: {
@@ -40,11 +41,25 @@ export default {
       }).then(res => {
         this.user = res.data.data // 获取最新信息,赋值给列表上
       })
+    },
+    xiala (command) {
+      if (command === 'account') {
+      // 个人信息
+      } else if (command === 'git') {
+      // 跳转给git
+        window.location.href = 'https://github.com/liulong55/81toutiao'
+      } else {
+        // 退出
+        window.localStorage.clear() // 清除本项目在本地的所有缓存
+        // 跳转给login
+        this.$router.push('/login')
+      }
     }
   },
   created () {
     this.getUserInfo() // 获取用户信息
   }
+
 }
 </script>
 

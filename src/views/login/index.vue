@@ -78,25 +78,11 @@ export default {
             window.localStorage.setItem('user-onfo', JSON.stringify(result.data)) // 这也省了一个data,去看响应拦截
             // 登录成功,跳转到home页
             this.$router.push('/home')
-            // 登录失败提醒
-          }).catch(res => {
-            this.openVn()
-            this.formData.mobile = ''
-            this.formData.code = ''
-            this.formData.check = false
           })
         }
       })
-    },
-    openVn () {
-      const h = this.$createElement
-      this.$message({
-        message: h('p', null, [
-          h('span', null, '登录信息有误'),
-          h('i', { style: 'color: teal' })
-        ])
-      })
     }
+
   }
 }
 </script>

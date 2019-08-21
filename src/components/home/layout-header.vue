@@ -1,6 +1,6 @@
 <template>
 <el-row type="flex" class="layout-header" justify="space-between">
-  <el-col :span="6" class="left">
+  <el-col :span="16" class="left">
       <i class="el-icon-s-unfold" ></i>
       <span>江苏传智播客教育科技股份有限公司</span>
   </el-col>
@@ -65,9 +65,9 @@ export default {
 
 <style lang='less' scoped>
     .layout-header{
-        background-color: aliceblue;
+      line-height: 60px;
         .left{
-            padding: 10px 5px;
+            padding: 0px 5px;
             display: flex;
             align-items: center;
             i{

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './permission' // 用了全局前置守卫,把router导出了,所以这跟换为那个文件
 import ElementUI from 'element-ui' // 引入element组件
 import 'element-ui/lib/theme-chalk/index.css' // 引入样式
 import './style/index.less' // 引入样式

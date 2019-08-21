@@ -33,11 +33,8 @@ export default {
   },
   methods: {
     getUserInfo () {
-      let userInfo = window.localStorage.getItem('user-onfo') // 获取用户储存信息,里面有token
-      let token = userInfo ? JSON.parse(userInfo).token : null // 获取token
-      token && this.$axios({
-        url: '/user/profile',
-        headers: { 'Authorization': `Bearer ${token}` } // 将headers中赋值,后端需要token身份信息, 携带信息
+      this.$axios({
+        url: '/user/profile'
       }).then(res => {
         this.user = res.data.data // 获取最新信息,赋值给列表上
       })

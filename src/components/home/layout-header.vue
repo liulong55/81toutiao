@@ -36,7 +36,7 @@ export default {
       this.$axios({
         url: '/user/profile'
       }).then(res => {
-        this.user = res.data.data // 获取最新信息,赋值给列表上
+        this.user = res.data// 获取最新信息,赋值给列表上    请求拦截到data,所以写一个data即可
       })
     },
     xiala (command) {

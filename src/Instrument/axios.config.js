@@ -13,4 +13,13 @@ axios.interceptors.request.use(function (config) {
   // 对请求错误做些什么
   return Promise.reject(error)
 })
+// 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+  // 对响应数据做点什么
+  console.log(response) // 内容是请求回来的数据,data等等
+  return response.data ? response.data : {} // 只返回data,如果他有,就返回,没有就返回空对象的,要不然会报错
+}, function (error) {
+  // 对响应错误做点什么
+  return Promise.reject(error)
+})
 export default axios // 导出

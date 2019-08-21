@@ -73,9 +73,9 @@ export default {
           console.log(this.formData)
           this.$axios.post('/authorizations', this.formData).then(result => {
             // console.log(result)
-            console.log(result.data.data)
+            // console.log(result.data.data)
             // 储存在本地里
-            window.localStorage.setItem('user-onfo', JSON.stringify(result.data.data))
+            window.localStorage.setItem('user-onfo', JSON.stringify(result.data)) // 这也省了一个data,去看响应拦截
             // 登录成功,跳转到home页
             this.$router.push('/home')
             // 登录失败提醒

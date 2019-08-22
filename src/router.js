@@ -29,6 +29,10 @@ export default new Router({
         { // 挂载评论列表路由
           path: '/home/comment',
           component: () => import('./views/comment/index.vue')
+        },
+        {// 挂载素材管理路由
+          path: '/home/material',
+          component: () => import('./views/material/index.vue')
         }
       ]
     }

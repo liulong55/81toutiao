@@ -25,6 +25,10 @@ export default new Router({
         {
           path: '',
           component: moren
+        },
+        { // 挂载评论列表路由
+          path: '/home/comment',
+          component: () => import('./views/comment/index.vue')
         }
       ]
     }

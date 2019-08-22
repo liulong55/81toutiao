@@ -1,6 +1,12 @@
 import axios from 'axios' // 引入axios
 import { Message } from 'element-ui' // 单独引入message模块
+import JSONBig from 'json-bigint' // 引入大数字处理模块
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0' // 优化设置baseUrl,后台接口地址优化
+// axios.defaults 默认选项
+// 处理大数字
+axios.defaults.transformResponse = [function (data) {
+  return JSONBig.parse(data)
+}]
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么

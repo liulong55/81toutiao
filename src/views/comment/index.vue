@@ -43,7 +43,7 @@ export default {
         this.$axios({
           method: 'put',
           url: '/comments/status',
-          params: { article_id: row.id },
+          params: { article_id: row.id.toString() },
           data: { allow_comment: !row.comment_status } // 状态是反着的
         }).then(() => {
           // 进入这个函数一定成功

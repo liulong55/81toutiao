@@ -1,7 +1,8 @@
 <template>
   <!-- 评论列表 -->
   <!-- el-card具名插槽标题 -->
-  <el-card>
+         <!-- 加载 -->
+  <el-card v-loading='loading'>
       <!-- 面包屑具名插槽标题 -->
       <bread-crumb slot="header">
             <template slot="title">评论列表</template>
@@ -47,7 +48,9 @@ export default {
         pagesize: 10, // 每页多少条
         total: 0, // 总共多少条
         currentpage: 1 // 当前页面
-      }
+      },
+      //  加载
+      loading: false
     }
   },
   methods: {
@@ -75,7 +78,8 @@ export default {
     },
     // 渲染页面
     getcomments () {
-    //   let pageParams = { page: this.page.currentpage, per_page: this.page.pagesize }
+      this.loading = true // 在请求之前将加载状态设置为true  遮盖
+      //   let pageParams = { page: this.page.currentpage, per_page: this.page.pagesize }
       this.$axios({
         url: '/articles',
         params: {
@@ -87,6 +91,7 @@ export default {
       }).then(result => {
         this.list = result.data.results // 取到列表数据 给 当前的数据对象
         this.page.total = result.data.total_count // 评论文章总数赋值给当前分页的总数
+        this.loading = false // 关闭加载进度
       })
     },
     // 用来格式化内容    Cellvalue当前单元格值

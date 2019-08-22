@@ -3,7 +3,7 @@
 <!-- 最外层容器 -->
 <el-container>
     <!-- 左侧 -->
-  <layout-aside></layout-aside>
+  <layout-aside style="min-height:100vh"></layout-aside>
   <el-container>
       <!-- 右边头 -->
     <el-header style="padding:0">

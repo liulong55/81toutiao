@@ -63,7 +63,7 @@ export default {
     }
   },
   methods: {
-    // 切换页签   另一种写法绑定上面那个tab栏切换事件   这是老师写的,下面那个分页功能是助教教的
+    // 切换页签   另一种写法绑定上面那个tab栏切换事件   这是老师写的,下面那个分页功能是助教教的,意思都是拿true,false控制
     // changeTab () {
     //   this.page.currentPage = 1 // 因为每次切换标签 都从第一页开始
     //   this.getMaterial()

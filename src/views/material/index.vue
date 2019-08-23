@@ -4,14 +4,16 @@
             <template slot="title">素材管理</template>
       </bread-crumb>
       <!-- 选项卡切换                      tab 被选中时触发的事件 -->
-       <el-tabs v-model="activeName"  @tab-click="tabClick">
-    <el-tab-pane label="全部" name="first">
+       <el-tabs v-model="activeName"  @tab-click="changeTab">
+    <el-tab-pane label="全部" name="all">
         <div class="img-list">
             <el-card class="img-card" v-for="(item,index) in list" :key='index'>
                 <img :src="item.url" alt="">
                 <el-row class="operate" type="flex" justify="space-around">
-                    <i class="el-icon-star-on"></i>
-                     <i class="el-icon-delete-solid"></i>
+                                                     <!-- 收藏功能 -->
+                    <i class="el-icon-star-on" @click='collectOrCancel(item)' :style="{color:item.is_collected? 'red':''}"></i>
+                                                        <!-- 删除功能,但是接口有问题,所以不能成功 -->
+                     <i class="el-icon-delete-solid" @click='delMateial(item)'></i>
                 </el-row>
             </el-card>
         </div>
@@ -26,7 +28,7 @@
             ></el-pagination>
           </el-row>
     </el-tab-pane>
-    <el-tab-pane label="收藏" name="second">
+    <el-tab-pane label="收藏" name="collect">
         <div class="img-list">
             <el-card class="img-card" v-for='(item,index) in list' :key='index'>
                 <img :src="item.url" alt="">
@@ -52,8 +54,7 @@ export default {
   data () {
     return {
       // 默认那个选项
-      activeName: 'first',
-      activeNameStatus: true, // 设置个变量来控制接口
+      activeName: 'all',
       list: [],
       page: {
         currentPage: 1,
@@ -63,11 +64,35 @@ export default {
     }
   },
   methods: {
-    // 切换页签   另一种写法绑定上面那个tab栏切换事件   这是老师写的,下面那个分页功能是助教教的,意思都是拿true,false控制
-    // changeTab () {
-    //   this.page.currentPage = 1 // 因为每次切换标签 都从第一页开始
-    //   this.getMaterial()
-    // },
+    // 收藏功能
+    collectOrCancel (item) {
+      let mess = this.is_collected ? '取消收藏' : '收藏'
+      this.$confirm(`您确定要${mess}吗?`, '提醒').then(() => {
+        this.$axios({
+          method: 'put',
+          url: `/user/images/${item.id}`,
+          data: { collect: !item.is_collected } // 取相反的状态
+        }).then(() => {
+          // 重新拉取下数据
+          this.getMaterial()
+        })
+      })
+    },
+    // 删除素材方法
+    delMateial (item) {
+      this.$confirm('您确定要删除此图片吗?', '标题').then(() => {
+        this.$axios({
+          method: 'delete',
+          url: `/user/images/${item.id}`
+        }).then(result => {
+          this.getMaterial()
+        })
+      })
+    },
+    changeTab () {
+      this.page.currentPage = 1 // 因为每次切换标签 都从第一页开始
+      this.getMaterial()
+    },
     // 切换页码
     changePage (newPage) {
       this.page.currentPage = newPage
@@ -80,20 +105,21 @@ export default {
         per_page: this.page.pageSize
       }
       this.$axios.get('/user/images', {
-        params: { collect: this.activeNameStatus, ...pageParams }
+        params: { collect: this.activeName === 'collect', ...pageParams }
       }).then(result => {
         this.list = result.data.results
         this.page.total = result.data.total_count
         console.log(result)
       })
-    }, // tab 被选中时触发的事件  targetName里边有个label
-    tabClick (targetName) {
-      targetName.label === '全部' ? this.activeNameStatus = false : this.activeNameStatus = true
-      this.getMaterial()
-    }
+    } // tab 被选中时触发的事件  targetName里边有个label
+    // tabClick (targetName) {
+    //   targetName.label === '全部' ? this.activeNameStatus = false : this.activeNameStatus = true
+    //   console.log(targetName)
+    //   this.getMaterial()
+    // }
   },
   created () {
-    this.getMaterial()
+    this.getMaterial() // 第一次进入 activeName === "all"  加载第一页的全部数据
   }
 }
 </script>

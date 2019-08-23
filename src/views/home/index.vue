@@ -9,7 +9,7 @@
     <el-header style="padding:0">
       <layout-header></layout-header>
     </el-header>
-    <el-main style="padding:0">
+    <el-main>
         <!-- 二级路由的容器 -->
         <router-view/>
     </el-main>

@@ -3,6 +3,10 @@
          <bread-crumb slot="header">
             <template slot="title">素材管理</template>
       </bread-crumb>
+                      <!-- 上传按钮                                            可以自定义上传的实现 -->
+      <el-upload class="upload-material" action='' :show-file-list='false' :http-request='uploadImg'>
+        <el-button type="primary">上传图片</el-button>
+      </el-upload>
       <!-- 选项卡切换                      tab 被选中时触发的事件 -->
        <el-tabs v-model="activeName"  @tab-click="changeTab">
     <el-tab-pane label="全部" name="all">
@@ -64,6 +68,20 @@ export default {
     }
   },
   methods: {
+    // 上传功能
+    uploadImg (params) {
+      // console.log(params)  里面有个file属性里是我们需要的
+      let formDate = new FormData()
+      formDate.append('image', params.file) // 参数是image
+      this.$axios({
+        method: 'post',
+        url: '/user/images',
+        data: formDate
+      }).then(() => {
+        // 重新获取数据
+        this.getMaterial()
+      })
+    },
     // 收藏功能
     collectOrCancel (item) {
       let mess = this.is_collected ? '取消收藏' : '收藏'
@@ -125,6 +143,12 @@ export default {
 </script>
 
 <style lang='less' scoped>
+    .upload-material{
+      position: absolute;
+      right: 20px;
+      margin: -10px 15px;
+      z-index: 1;
+    }
   .img-list {
   display: flex;
   justify-content: space-around;

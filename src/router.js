@@ -33,6 +33,12 @@ export default new Router({
         {// 挂载素材管理路由
           path: '/home/material',
           component: () => import('./views/material/index.vue')
+        },
+        // 内容列表路由
+        {
+          path: '/home/articles',
+          component: () => import('./views/articles/index.vue')
+
         }
       ]
     }

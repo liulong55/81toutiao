@@ -114,7 +114,7 @@ export default {
       // conditions.page = this.page.currentpage // 合并参数 最新页数
       // conditions.per_page = this.page.pagesize // 合并参数 最新每页数量
       // this.getArticles(conditions) // 调接口,把值传进去
-      // this.getArticles(this.getConditions()) // 查询数据
+      this.getArticles(this.getConditions()) // 查询数据
     },
     // 获取条件
     getConditions () {

@@ -55,11 +55,12 @@
         </div>
         <!-- 右侧内容 -->
         <div class="right">
-          <span>
+          <span style="cursor:pointer">
             <i class="el-icon-edit"></i>
             修改
           </span>
-          <span>
+                        <!-- 删除 -->
+          <span @click='cancel(item)' style="cursor:pointer">
             <i class="el-icon-delete"></i>
             删除
           </span>
@@ -93,6 +94,18 @@ export default {
     }
   },
   methods: {
+    // 删除功能
+    cancel (item) {
+      this.$confirm('您确定要删除本条文章吗', '标题').then(() => {
+        this.$axios({
+          method: 'delete',
+          url: `/articles/${item.id.toString()}`
+        }).then(() => {
+          // 重新加载  由于页码未变,条件未变,直接请求方法即可
+          this.getArticles(this.getConditions())
+        })
+      })
+    },
     // 页码改变事件
     changepage (newPage) {
       this.page.currentpage = newPage // 获取当前的最新页码
@@ -101,7 +114,7 @@ export default {
       // conditions.page = this.page.currentpage // 合并参数 最新页数
       // conditions.per_page = this.page.pagesize // 合并参数 最新每页数量
       // this.getArticles(conditions) // 调接口,把值传进去
-      this.getArticles(this.getConditions()) // 查询数据
+      // this.getArticles(this.getConditions()) // 查询数据
     },
     // 获取条件
     getConditions () {

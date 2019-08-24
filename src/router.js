@@ -39,6 +39,11 @@ export default new Router({
           path: '/home/articles',
           component: () => import('./views/articles/index.vue')
 
+        },
+        // 发表文章路由
+        {
+          path: '/home/publish',
+          component: () => import('./views/publish/index.vue')
         }
       ]
     }

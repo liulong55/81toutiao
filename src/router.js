@@ -48,6 +48,11 @@ export default new Router({
         {
           path: '/home/publish/:articleId', // 编辑路由,用的是动态路由
           component: () => import('./views/publish/index.vue')
+        },
+        // 账户信息
+        {
+          path: '/home/account',
+          component: () => import('./views/account/index.vue')
         }
       ]
     }

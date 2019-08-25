@@ -68,6 +68,15 @@ export default {
         this.channels = result.data.channels
       })
     },
+    // 通过文章id获取文章信息
+    getArticleByid () {
+      let { articleId } = this.$route.params // 将传过来的id解构出来
+      this.$axios({
+        url: `/articles/${articleId}`
+      }).then(result => {
+        this.formData = result.data // 将文章数据和页面数据绑定起来
+      })
+    },
     // 发布内容
     publish (draft) {
       this.$refs.myForm.validate(isok => {
@@ -87,6 +96,8 @@ export default {
     }
   },
   created () {
+    let { articleId } = this.$route.params // 将传过来的id解构出来
+    articleId && this.getArticleByid()
     this.getChannels() // 获取频道
   }
 }

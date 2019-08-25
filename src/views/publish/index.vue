@@ -82,9 +82,12 @@ export default {
       this.$refs.myForm.validate(isok => {
         if (isok) {
           // 发布文章
+          let { articleId } = this.$route.params // 将传过来的id解构出来
+          let method = articleId ? 'put' : 'post' // 根据文章id确定,是编辑还是新增
+          let url = articleId ? `/articles/${articleId}` : '/articles' // 根据id确定,当前请求的地址
           this.$axios({
-            method: 'post',
-            url: '/articles',
+            method: method,
+            url: url,
             params: { draft }, // 是否为草稿
             data: this.formData
           }).then(() => {

@@ -55,7 +55,7 @@
         </div>
         <!-- 右侧内容 -->
         <div class="right">
-          <span style="cursor:pointer">
+          <span style="cursor:pointer" @click='goEdit(item)'>
             <i class="el-icon-edit"></i>
             修改
           </span>
@@ -94,6 +94,10 @@ export default {
     }
   },
   methods: {
+    // 编辑功能 // 去编辑页面 发布页面和编辑页面公用一个页面
+    goEdit (item) {
+      this.$router.push(`/home/publish/${item.id.toString()}`)
+    },
     // 删除功能
     cancel (item) {
       this.$confirm('您确定要删除本条文章吗', '标题').then(() => {

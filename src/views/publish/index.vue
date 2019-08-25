@@ -11,21 +11,21 @@
         <el-input v-model="formData.content" type="textarea" :rows="4" placeholder="请输入内容"></el-input>
       </el-form-item>
       <el-form-item label="封面">
-        <el-radio-group>
+        <el-radio-group v-model="formData.cover.type">
           <el-radio :label="1">单图</el-radio>
           <el-radio :label="3">三图</el-radio>
           <el-radio :label="0">无图</el-radio>
           <el-radio :label="-1">自动</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="频道" prop="channels_id">
-          <el-select  v-model="formData.channels_id">
+      <el-form-item label="频道" prop="channel_id">
+          <el-select  v-model="formData.channel_id">
              <el-option :label="item.name" :value="item.id" v-for="item in channels" :key='item.id'></el-option>
           </el-select>
       </el-form-item>
       <el-form-item>
-          <el-button type="primary" @click=publish>发布</el-button>
-          <el-button>存入草稿</el-button>
+          <el-button type="primary" @click="publish(false)">发布</el-button>
+          <el-button  @click="publish(true)">存入草稿</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -39,12 +39,16 @@ export default {
       formData: {
         title: '', // 标题
         content: '', // 文本域
-        channels_id: null,
-        cover: 0 // 默认给个无图
+        channel_id: null,
+        cover: {
+          type: 0, // 类型
+          images: [] // 图片数组 随着 type变化而变化 type =>  image 变化 type  == 1 images ['']  type = 3 images ['','',''] 否则images为 []
+        }
       },
       rules: {
         title: [
-          { required: true, message: '标题内容不能为空' }
+          { required: true, message: '标题内容不能为空' },
+          { min: 5, max: 30, message: '标题必须在5到30个字符之间' }
         ],
         content: [
           { required: true, message: '发布内容不能为空' }
@@ -65,11 +69,20 @@ export default {
       })
     },
     // 发布内容
-    publish () {
+    publish (draft) {
       this.$refs.myForm.validate(isok => {
-        //   if(){
-
-        //   }
+        if (isok) {
+          // 发布文章
+          this.$axios({
+            method: 'post',
+            url: '/articles',
+            params: { draft }, // 是否为草稿
+            data: this.formData
+          }).then(() => {
+          // 如果发布成功 就会跳转到内容列表
+            this.$router.push('/home/articles')
+          })
+        }
       })
     }
   },

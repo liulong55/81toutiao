@@ -44,6 +44,10 @@ export default new Router({
         {
           path: '/home/publish',
           component: () => import('./views/publish/index.vue')
+        },
+        {
+          path: '/home/publish/:articleId', // 编辑路由,用的是动态路由
+          component: () => import('./views/publish/index.vue')
         }
       ]
     }

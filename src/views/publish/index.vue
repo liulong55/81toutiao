@@ -18,7 +18,7 @@
           <el-radio :label="-1">自动</el-radio>
         </el-radio-group>
         <el-form-item>
-            <cover-image :type='formData.cover.type' :images='formData.cover.images'></cover-image>
+            <cover-image @updateImages='updateImages' :type='formData.cover.type' :images='formData.cover.images'></cover-image>
         </el-form-item>
       </el-form-item>
       <el-form-item label="频道" prop="channel_id">
@@ -63,6 +63,12 @@ export default {
     }
   },
   methods: {
+    // 接收封面组件传过来的参数 url index
+    updateImages (url, index) {
+      this.formData.cover.images = this.formData.cover.images.map((item, i) => {
+        return i === index ? url : item
+      })
+    },
     changetype () {
       // 可以获取到最新的封面类型
       // 去改变当前的images类型

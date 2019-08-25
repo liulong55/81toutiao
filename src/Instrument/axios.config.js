@@ -44,6 +44,9 @@ axios.interceptors.response.use(function (response) {
     case 404:
       message = '手机号码不正确'
       break
+    case 409:
+      message = '用户名已存在'
+      break
     case 401:
       // 针对toekn过去或失效,特殊处理
       message = 'toekn过去或未传'

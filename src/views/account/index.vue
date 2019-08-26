@@ -32,6 +32,8 @@
 </template>
 
 <script>
+// 引入
+import eventBus from '../../utils/eventBus'
 export default {
   data () {
     return {
@@ -70,6 +72,7 @@ export default {
         // 获取到新地址之后,赋值给当前页面
         this.formData.photo = result.data.photo
         this.loading = false
+        eventBus.$emit('updateUserInfoSuccess')// 触发了一个事件,更新头像成功;
       })
     },
     // 渲染个人信息
@@ -91,6 +94,7 @@ export default {
             data: this.formData
           }).then(() => {
             this.$message({ message: '保存成功', type: 'success' })
+            eventBus.$emit('updateUserInfoSuccess')// 触发了一个事件,修改信息成功
           })
         }
       })

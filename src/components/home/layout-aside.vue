@@ -3,10 +3,12 @@
   <div class="layout-aside">
     <!-- 顶部图 -->
     <div class="aside-img">
-      <img src="../../assets/img/logo_admin.png" alt />
+      <img :src="collapse? smallimg:bigimg" :style="{width:collapse? '30px':'120px'}" alt />
     </div>
     <!-- :router=true 开启vue-router的模式 -->
     <el-menu
+    :collapse="collapse"
+      :collapse-transition="false"
       background-color="#353b4e"
       text-color="#adafb5"
       active-text-color="#ffd04b"
@@ -45,7 +47,22 @@
 </template>
 
 <script>
-export default {}
+import eventBus from '../../utils/eventBus'
+export default {
+  data () {
+    return {
+      collapse: false, // 默认是展开
+      bigimg: require('../../assets/img/logo_admin.png'), // 大图
+      smallimg: require('../../assets/img/toutiao.png') // 小图
+    }
+  },
+  created () {
+    // 展开或者折叠每次取相反
+    eventBus.$on('collopseOrClose', () => {
+      this.collapse = !this.collapse
+    })
+  }
+}
 </script>
 
 <style lang='less' scoped>

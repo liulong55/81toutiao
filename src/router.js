@@ -9,6 +9,10 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    { // 通配404
+      path: '*',
+      component: () => import('./views/404.vue')
+    },
     {
       path: '/',
       redirect: '/login'

@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { LoginByMobile } from '../../api/login' // 引入模块化
 export default {
   data () {
     // 自定义效验函数
@@ -67,18 +68,19 @@ export default {
   methods: {
     login () {
       // 手动效验表单数据
-      this.$refs.form.validate(isok => {
+      this.$refs.form.validate(async isok => {
         if (isok) {
           console.log('前端效验成功')
           console.log(this.formData)
-          this.$axios.post('/authorizations', this.formData).then(result => {
-            // console.log(result)
-            // console.log(result.data.data)
-            // 储存在本地里
-            window.localStorage.setItem('user-onfo', JSON.stringify(result.data)) // 这也省了一个data,去看响应拦截
-            // 登录成功,跳转到home页
-            this.$router.push('/home')
-          })
+          //  this.$axios.post('/authorizations', this.formData).then(result => {
+          // console.log(result)
+          // console.log(result.data.data)
+          // 储存在本地里
+          let result = await LoginByMobile(this.formData)
+          window.localStorage.setItem('user-onfo', JSON.stringify(result.data)) // 这也省了一个data,去看响应拦截
+          // 登录成功,跳转到home页
+          this.$router.push('/home')
+          // })
         }
       })
     }

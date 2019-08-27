@@ -39,12 +39,11 @@ export default {
       eventBus.$emit('collopseOrClose') // 触发了一个事件 打开或者
       this.currentClass = this.currentClass === 'el-icon-s-fold' ? 'el-icon-s-unfold' : 'el-icon-s-fold'
     },
-    getUserInfo () {
-      this.$axios({
+    async getUserInfo () {
+      let res = await this.$axios({
         url: '/user/profile'
-      }).then(res => {
-        this.user = res.data// 获取最新信息,赋值给列表上    请求拦截到data,所以写一个data即可
       })
+      this.user = res.data// 获取最新信息,赋值给列表上    请求拦截到data,所以写一个data即可
     },
     xiala (command) {
       if (command === 'account') {

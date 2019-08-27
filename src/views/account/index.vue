@@ -76,12 +76,11 @@ export default {
       })
     },
     // 渲染个人信息
-    getpersonal () {
-      this.$axios({
+    async  getpersonal () {
+      let result = await this.$axios({
         url: '/user/profile'
-      }).then(result => {
-        this.formData = result.data
       })
+      this.formData = result.data
     },
     // 修改
     saveUserInfo () {

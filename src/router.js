@@ -57,6 +57,11 @@ export default new Router({
         {
           path: '/home/account',
           component: () => import('./views/account/index.vue')
+        },
+        // eachr图表 图文数据
+        {
+          path: '/home/fansdata',
+          component: () => import('./views/fans/index.vue')
         }
       ]
     }
